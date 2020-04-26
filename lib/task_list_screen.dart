@@ -22,10 +22,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: ListView.separated(
-        separatorBuilder: (context, index) => Divider(
-          color: Colors.grey,
-        ),
+      body: ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, position) => getRow(position),
       ),
@@ -41,19 +38,42 @@ class _TaskListScreenState extends State<TaskListScreen> {
   Widget getRow(int i) {
     return Padding(
       padding: EdgeInsets.all(5.0),
-      child: ListTile(
-        title: Text(
-          "${items[i].title}",
-          style: TextStyle(
-            fontStyle: FontStyle.normal,
-            color: Colors.blue
+      child: Card(
+        color: Colors.yellow,
+        elevation: 4.0,
+        child: ListTile(
+          trailing: InkWell(
+            onTap: () {
+              print("Tapped on the row $i");
+            },
+            child: Container(
+              height: 25.0,
+              width: 25.0,
+              color: Colors.greenAccent,
+              child: Text(
+                "${i+1}"
+              ),
+              alignment: Alignment.center,
+            ),
           ),
-        ),
-        subtitle: Text(
-          "${items[i].description}",
-          style: TextStyle(
-              fontStyle: FontStyle.italic,
-              color: Colors.black
+          leading: CircleAvatar(
+            child: Text(
+              "${i+1}"
+            ),
+          ),
+          title: Text(
+            "${items[i].title}",
+            style: TextStyle(
+              fontStyle: FontStyle.normal,
+              color: Colors.blue
+            ),
+          ),
+          subtitle: Text(
+            "${items[i].description}",
+            style: TextStyle(
+                fontStyle: FontStyle.italic,
+                color: Colors.black
+            ),
           ),
         ),
       ),
@@ -61,8 +81,8 @@ class _TaskListScreenState extends State<TaskListScreen> {
   }
 
   _createNewTask() async {
-    final result = await Navigator.of(context).pushNamed(NewTaskRoute.routeName);
-    final Task task = result as Task;
+    final Task task = await Navigator.of(context).pushNamed(NewTaskRoute.routeName) as Task;
+//    final Task task = result as Task;
     setState(() {
       print(task.title);
       print(task.description);

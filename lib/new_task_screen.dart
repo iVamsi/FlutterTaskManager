@@ -55,7 +55,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   }
 
   void _saveTask() {
-    Navigator.of(context).pop(Task(titleTextFieldController.text, descriptionTextFieldController.text));
+    Navigator.of(context).pop(Task(title: titleTextFieldController.text, description: descriptionTextFieldController.text));
   }
 
   @override
